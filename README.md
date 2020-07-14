@@ -90,7 +90,7 @@ This repository includes code from two previous projects: [LEO](https://github.c
 ## Citation
 
 ```
-@inproceedings{xu2020metafun,
+@inproceedings{xu2019metafun,
   title = {MetaFun: Meta-Learning with Iterative Functional Updates},
   author = {Xu, Jin and Ton, Jean-Francois and Kim, Hyunjik and Kosiorek, Adam R and Teh, Yee Whye},
   booktitle = {International Conference on Machine Learning (ICML)},
