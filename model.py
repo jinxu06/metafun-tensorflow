@@ -415,7 +415,7 @@ class MetaFunRegressor(snt.AbstractModule):
         #
         self._initial_inner_lr = FLAGS.initial_inner_lr
         self._orthogonality_reg = 0
-        self._loss_type = "log_prob" # mse | log_prob
+        self._loss_type = "mse" # mse | log_prob
         self._nonlinearity = tf.nn.relu
         self._repr_as_inputs = FLAGS.repr_as_inputs
 
