@@ -58,14 +58,19 @@ python run.py --gpus 0 --exp_name metafun-tiered-5shot-kernel --outer_lr 4.5e-05
 ### Few-shot regression 
 Because the sinusoid regression problem is mainly for qualitative analysis and visualisation, we directly run the following without hyperparameter search:
 ```
-python run.py --gpus 0 --exp_name sinusoid_regression --dataset_name sinusoid --outer_lr 1e-4 --dropout_rate 0.0 --nn_size 128 --dim_reprs 128 --nn_layers 3 --num_iters 5 --initial_state_type zero --initial_learning_rate 0.1 --model_cls metafun_regressor --training_batch_size 16  --eval_batch_size 16  --checkpoint_steps 2000 --l2_penalty_weight 0.0 --max_num_context 20 --num_steps_limit 100000 --checkpoint_dir ./checkpoints --result_dir ./results
+python run.py --gpus 0 --exp_name sinusoid_regression --dataset_name sinusoid --outer_lr 1e-4 --dropout_rate 0.0 --nn_size 128 --dim_reprs 128 --nn_layers 3 --num_iters 5 --initial_state_type zero --initial_learning_rate 0.1 --model_cls metafun_regressor --training_batch_size 16  --eval_batch_size 16  --checkpoint_steps 2000 --l2_penalty_weight 0.0 --max_num_context 10 --num_steps_limit 100000 --checkpoint_dir ./checkpoints --result_dir ./results
 ```
 To evaluate:
 ```
-python run.py --gpus 0 --exp_name sinusoid_regression --dataset_name sinusoid --outer_lr 1e-4 --dropout_rate 0.0 --nn_size 128 --dim_reprs 128 --nn_layers 3 --num_iters 5 --initial_state_type zero --initial_learning_rate 0.1 --model_cls metafun_regressor --training_batch_size 16  --eval_batch_size 16  --checkpoint_steps 2000 --l2_penalty_weight 0.0 --max_num_context 20 --num_steps_limit 100000 --checkpoint_dir ./checkpoints --result_dir ./results --evaluation_mode --eval_set test --no_early_stopping
+python run.py --gpus 0 --exp_name sinusoid_regression --dataset_name sinusoid --outer_lr 1e-4 --dropout_rate 0.0 --nn_size 128 --dim_reprs 128 --nn_layers 3 --num_iters 5 --initial_state_type zero --initial_learning_rate 0.1 --model_cls metafun_regressor --training_batch_size 16  --eval_batch_size 16  --checkpoint_steps 2000 --l2_penalty_weight 0.0 --max_num_context 10 --num_steps_limit 100000 --checkpoint_dir ./checkpoints --result_dir ./results --evaluation_mode --eval_set test --no_early_stopping
 ```
 Results for both training and evaluation can be found in `--result_dir`.
 
+To compare to MAML quantitatively (table 1 in the paper) with a similar number of parameters (which we understand may not be a good indicator of model complexity), users can run the following version of our model:
+```
+python run.py --gpus 0 --exp_name sinusoid_regression --dataset_name sinusoid --outer_lr 1e-4 --dropout_rate 0.0 --nn_size 128 --dim_reprs 128 --nn_layers 3 --num_iters 5 --initial_state_type zero --initial_learning_rate 0.1 --model_cls metafun_regressor --training_batch_size 16  --eval_batch_size 16  --checkpoint_steps 2000 --l2_penalty_weight 0.0 --max_num_context 10 --num_steps_limit 100000 --checkpoint_dir ./checkpoints --result_dir ./results --repr_as_inputs --embedding_layers 2
+```
+It uses latent representation directly as inputs to the decoder and is not recommended if you do not want to limit the number of parameters.
 
 ### Randomised hyperparameter search
 [hps.py](https://github.com/jinxu06/metafun-tensorflow/blob/master/hps.py) is an example of script for randomised hyperparameter search. Before running the script, users should change settings at the top of this file, and even change distributions of hyperparameters in *class HPSearch* when necessary. 
